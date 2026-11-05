@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>The Traveler by Joseph Eckert — Reading Notes</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            serif: ['Cinzel', 'serif']
+          },
+          colors: {
+            parchment: {
+              950: '#0f0e0c',
+              900: '#171512',
+              850: '#1f1c18',
+              800: '#2a2620',
+              750: '#342f27',
+              700: '#423b32',
+              600: '#5c5245'
+            },
+            amberlamp: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+              800: '#92400e',
+              900: '#78350f',
+              950: '#451a03'
+            },
+            warmwhite: {
+              50: '#ffffff',
+              100: '#faf8f5',
+              200: '#f5f0e6',
+              300: '#ebe3d3',
+              400: '#d9cdb8',
+              500: '#b8a890'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* 2700K Incandescent warm reading glow */
+    html, body {
+      background-color: #0f0e0c;
+      color: #f5f0e6;
+      font-family: 'Inter', sans-serif;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      padding-bottom: env(safe-area-inset-bottom, 24px);
+    }
+    /* Prevent iOS Safari automatic zoom on inputs */
+    input, textarea, select {
+      font-size: 16px !important;
+    }
+    .glow-warm {
+      box-shadow: 0 4px 20px -2px rgba(245, 158, 11, 0.22), 0 0 16px -2px rgba(253, 230, 138, 0.12);
+    }
+    .glow-warm-button {
+      box-shadow: 0 3px 14px rgba(217, 119, 6, 0.35);
+    }
+    textarea {
+      field-sizing: content;
+      min-height: 80px;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #171512;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #342f27;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-amber-500/30 selection:text-amber-100 pb-12">
+
+  <!-- Mobile Top Bar with Joseph Eckert attribution -->
+  <header class="sticky top-0 z-40 bg-parchment-950/95 backdrop-blur border-b border-parchment-800 px-4 py-2.5">
+    <div class="max-w-2xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <span class="text-xl">🕯️</span>
+        <div>
+          <div class="flex items-baseline gap-2 flex-wrap">
+            <h1 class="font-serif font-bold text-sm sm:text-base tracking-wider text-warmwhite-100 leading-tight">THE TRAVELER</h1>
+            <span class="font-serif text-[11px] sm:text-xs tracking-wider text-warmwhite-500/70 uppercase">WHERE DOES THE TIME GO?</span>
+          </div>
+          <p class="text-xs text-warmwhite-400 font-medium leading-tight mt-0.5">
+            by Joseph Eckert <span class="text-[11px] text-amberlamp-300 font-mono ml-1.5">• Starts April 1, 2026</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Save Status & Options -->
+      <div class="flex items-center gap-2">
+        <div id="save-badge" class="flex items-center gap-1.5 text-[11px] font-medium text-amberlamp-200 bg-amberlamp-950/70 border border-amberlamp-800/60 px-2 py-0.5 rounded-full">
+          <span class="w-1.5 h-1.5 rounded-full bg-amberlamp-400 animate-pulse"></span>
+          <span id="save-text">Saved</span>
+        </div>
+
+        <button id="menu-btn" class="p-2 rounded-lg bg-parchment-850 border border-parchment-750 text-warmwhite-300 hover:text-white" aria-label="Settings & Backup">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Spoiler Confirmation Modal Dialog -->
+  <div id="spoiler-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-parchment-900 border border-amberlamp-700/80 w-full max-w-sm rounded-2xl p-5 shadow-2xl glow-warm space-y-4 animate-in fade-in zoom-in-95 duration-200">
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-xl bg-amberlamp-950 border border-amberlamp-700 flex items-center justify-center text-xl shrink-0">
+          ⚠️
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-warmwhite-50">Spoiler alert! Are you sure?</h3>
+          <p class="text-xs text-warmwhite-400 mt-1.5 leading-relaxed">
+            Revealing all jumps displays future dates, elapsed decades, and major story milestones before Scott reaches them.
+          </p>
+        </div>
+      </div>
+
+      <div class="pt-2 flex items-center justify-end gap-2.5">
+        <button id="modal-cancel-btn" class="px-4 py-2 rounded-xl bg-parchment-800 hover:bg-parchment-750 text-xs font-semibold text-warmwhite-200 border border-parchment-700 transition">
+          Keep Shield On
+        </button>
+        <button id="modal-confirm-btn" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amberlamp-600 to-amberlamp-500 hover:from-amberlamp-500 hover:to-amberlamp-400 text-xs font-bold text-parchment-950 transition shadow-md">
+          Yes, Reveal All
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Options & Backup Drawer -->
+  <div id="settings-drawer" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-parchment-900 border border-parchment-750 w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-5 space-y-4">
+      <div class="flex items-center justify-between border-b border-parchment-800 pb-3">
+        <h3 class="font-semibold text-warmwhite-100 text-base">Reading Options & Backup</h3>
+        <button id="close-drawer-btn" class="p-1 rounded-lg text-warmwhite-400 hover:text-white">✕</button>
+      </div>
+
+      <div class="space-y-3 text-sm">
+        <!-- Direct Jump Selector in Drawer -->
+        <div class="p-3 rounded-xl bg-parchment-850 border border-parchment-800 flex items-center justify-between">
+          <label for="drawer-jump-select" class="font-medium text-warmwhite-100 text-xs font-mono">Set Reading Progress:</label>
+          <select id="drawer-jump-select" class="bg-parchment-900 text-amberlamp-200 font-mono text-xs rounded-lg border border-amberlamp-700/60 py-1.5 px-2 outline-none">
+            <!-- Populated by JS -->
+          </select>
+        </div>
+
+        <label class="flex items-center justify-between p-3 rounded-xl bg-parchment-850 border border-parchment-800 cursor-pointer">
+          <div>
+            <div class="font-medium text-warmwhite-100">Spoiler Shield</div>
+            <div class="text-xs text-warmwhite-500">Hide jumps past your current reading position</div>
+          </div>
+          <input type="checkbox" id="drawer-spoiler-toggle" checked class="w-5 h-5 text-amberlamp-500 rounded bg-parchment-950 border-parchment-700 focus:ring-amberlamp-500">
+        </label>
+
+        <div class="p-3 rounded-xl bg-parchment-850 border border-parchment-800 space-y-2">
+          <div class="font-medium text-xs uppercase font-mono text-amberlamp-300">Notes Data & Sharing</div>
+          <div class="grid grid-cols-2 gap-2">
+            <button id="drawer-export-btn" class="py-2.5 px-3 rounded-lg bg-parchment-800 hover:bg-parchment-750 text-xs font-semibold text-warmwhite-100 border border-parchment-700 flex items-center justify-center gap-1.5">
+              <span>📥 Export Notes</span>
+            </button>
+            <label for="drawer-import-file" class="cursor-pointer py-2.5 px-3 rounded-lg bg-parchment-800 hover:bg-parchment-750 text-xs font-semibold text-warmwhite-100 border border-parchment-700 flex items-center justify-center gap-1.5 text-center">
+              <span>📤 Import Notes</span>
+              <input type="file" id="drawer-import-file" accept=".json" class="hidden">
+            </label>
+          </div>
+        </div>
+
+        <div class="text-xs text-warmwhite-500 p-1 text-center">
+          Notes save automatically in this browser. Export anytime to save a JSON file you can keep or restore.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Main Feed (Top card Jump:... removed) -->
+  <main class="max-w-2xl mx-auto px-3.5 py-3 w-full flex-1">
+    
+    <!-- Active Jumps Cards Feed -->
+    <div id="jumps-feed" class="space-y-3">
+      <!-- Cards rendered here by JS -->
+    </div>
+
+    <!-- Refined Protected Card: Reveal All on Left, "Next jumps protected", Reveal Next Jump on Right -->
+    <div id="locked-card" class="mt-3.5 py-2 px-3 rounded-2xl border border-dashed border-amberlamp-800/60 bg-amberlamp-950/25 flex items-center justify-between gap-2 text-xs">
+      
+      <!-- Left side: Reveal All button -->
+      <button id="peek-all-btn" class="shrink-0 px-2.5 py-1.5 rounded-xl bg-parchment-850 hover:bg-parchment-800 text-amberlamp-300 hover:text-amberlamp-200 border border-amberlamp-800/50 text-[11px] font-mono transition font-medium">
+        Reveal All...
+      </button>
+
+      <!-- Center: Clean "Next jumps protected" without numbers -->
+      <div class="flex items-center gap-1.5 text-warmwhite-300 font-medium text-[11px] sm:text-xs text-center truncate">
+        <span class="text-amberlamp-400 shrink-0">🔒</span>
+        <span>Next jumps protected</span>
+      </div>
+
+      <!-- Right side: Reveal Next Jump button -->
+      <button id="card-next-btn" class="shrink-0 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amberlamp-600 via-amberlamp-500 to-amberlamp-400 active:scale-95 text-parchment-950 font-bold text-xs glow-warm-button flex items-center gap-1 transition border border-amberlamp-300/40">
+        <span>Reveal Next Jump</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+      </button>
+
+    </div>
+
+  </main>
+
+  <script>
+    const JUMPS = [{"jump": 1, "days": 1, "days_formatted": "1", "converted": "1 day", "arrival_date": "Apr 02, 2026", "full_arrival_date": "April 02, 2026", "cum_days": 1, "cum_formatted": "1 days", "milestone": "The First Slip (24 hours lost)"}, {"jump": 2, "days": 2, "days_formatted": "2", "converted": "2 days", "arrival_date": "Apr 04, 2026", "full_arrival_date": "April 04, 2026", "cum_days": 3, "cum_formatted": "3 days", "milestone": ""}, {"jump": 3, "days": 4, "days_formatted": "4", "converted": "4 days", "arrival_date": "Apr 08, 2026", "full_arrival_date": "April 08, 2026", "cum_days": 7, "cum_formatted": "7 days", "milestone": ""}, {"jump": 4, "days": 8, "days_formatted": "8", "converted": "1.1 weeks (8 days)", "arrival_date": "Apr 16, 2026", "full_arrival_date": "April 16, 2026", "cum_days": 15, "cum_formatted": "15 days", "milestone": ""}, {"jump": 5, "days": 16, "days_formatted": "16", "converted": "2.3 weeks (16 days)", "arrival_date": "May 02, 2026", "full_arrival_date": "May 02, 2026", "cum_days": 31, "cum_formatted": "31 days", "milestone": "A month unfolds in days"}, {"jump": 6, "days": 32, "days_formatted": "32", "converted": "1.1 months (~4.6 weeks)", "arrival_date": "Jun 03, 2026", "full_arrival_date": "June 03, 2026", "cum_days": 63, "cum_formatted": "63 days", "milestone": ""}, {"jump": 7, "days": 64, "days_formatted": "64", "converted": "2.1 months (~9.1 weeks)", "arrival_date": "Aug 06, 2026", "full_arrival_date": "August 06, 2026", "cum_days": 127, "cum_formatted": "127 days", "milestone": ""}, {"jump": 8, "days": 128, "days_formatted": "128", "converted": "4.2 months (~18.3 weeks)", "arrival_date": "Dec 12, 2026", "full_arrival_date": "December 12, 2026", "cum_days": 255, "cum_formatted": "255 days", "milestone": ""}, {"jump": 9, "days": 256, "days_formatted": "256", "converted": "8.4 months (~36.6 weeks)", "arrival_date": "Aug 25, 2027", "full_arrival_date": "August 25, 2027", "cum_days": 511, "cum_formatted": "1.4 yrs", "milestone": ""}, {"jump": 10, "days": 512, "days_formatted": "512", "converted": "1.4 years (~16.8 months)", "arrival_date": "Jan 18, 2029", "full_arrival_date": "January 18, 2029", "cum_days": 1023, "cum_formatted": "2.8 yrs", "milestone": "Passing the 1-year mark"}, {"jump": 11, "days": 1024, "days_formatted": "1,024", "converted": "2.8 years (~34 mos)", "arrival_date": "Nov 08, 2031", "full_arrival_date": "November 08, 2031", "cum_days": 2047, "cum_formatted": "5.6 yrs", "milestone": ""}, {"jump": 12, "days": 2048, "days_formatted": "2,048", "converted": "5.6 years (~67 mos)", "arrival_date": "Jun 17, 2037", "full_arrival_date": "June 17, 2037", "cum_days": 4095, "cum_formatted": "11.2 yrs", "milestone": ""}, {"jump": 13, "days": 4096, "days_formatted": "4,096", "converted": "11.2 years", "arrival_date": "Sep 03, 2048", "full_arrival_date": "September 03, 2048", "cum_days": 8191, "cum_formatted": "22.4 yrs", "milestone": ""}, {"jump": 14, "days": 8192, "days_formatted": "8,192", "converted": "22.4 years", "arrival_date": "Feb 07, 2071", "full_arrival_date": "February 07, 2071", "cum_days": 16383, "cum_formatted": "44.9 yrs", "milestone": "Lyle reaches senior age (~45 yrs from start)"}, {"jump": 15, "days": 16384, "days_formatted": "16,384", "converted": "44.9 years", "arrival_date": "Dec 18, 2115", "full_arrival_date": "December 18, 2115", "cum_days": 32767, "cum_formatted": "89.7 yrs", "milestone": "Beyond Lyle's lifetime (~90 yrs from start)"}, {"jump": 16, "days": 32768, "days_formatted": "32,768", "converted": "89.7 years", "arrival_date": "Sep 05, 2205", "full_arrival_date": "September 05, 2205", "cum_days": 65535, "cum_formatted": "179.4 yrs", "milestone": ""}, {"jump": 17, "days": 65536, "days_formatted": "65,536", "converted": "179 years", "arrival_date": "Feb 09, 2385", "full_arrival_date": "February 09, 2385", "cum_days": 131071, "cum_formatted": "358.9 yrs", "milestone": ""}, {"jump": 18, "days": 131072, "days_formatted": "131,072", "converted": "359 years", "arrival_date": "Dec 22, 2743", "full_arrival_date": "December 22, 2743", "cum_days": 262143, "cum_formatted": "717.7 yrs", "milestone": ""}, {"jump": 19, "days": 262144, "days_formatted": "262,144", "converted": "718 years", "arrival_date": "Sep 12, 3461", "full_arrival_date": "September 12, 3461", "cum_days": 524287, "cum_formatted": "1,435 yrs", "milestone": ""}, {"jump": 20, "days": 524288, "days_formatted": "524,288", "converted": "1,435 years", "arrival_date": "Feb 23, 4897", "full_arrival_date": "February 23, 4897", "cum_days": 1048575, "cum_formatted": "2,871 yrs", "milestone": "Millenary scale (~2,800+ yrs)"}, {"jump": 21, "days": 1048576, "days_formatted": "1,048,576", "converted": "2,871 years", "arrival_date": "Jan 20, 7768", "full_arrival_date": "January 20, 7768", "cum_days": 2097151, "cum_formatted": "5,742 yrs", "milestone": ""}, {"jump": 22, "days": 2097152, "days_formatted": "2,097,152", "converted": "5,742 years", "arrival_date": "~Year 13,509", "full_arrival_date": "~Year 13,509", "cum_days": 4194303, "cum_formatted": "11,484 yrs", "milestone": ""}, {"jump": 23, "days": 4194304, "days_formatted": "4,194,304", "converted": "11,484 years", "arrival_date": "~Year 24,993", "full_arrival_date": "~Year 24,993", "cum_days": 8388607, "cum_formatted": "22,967 yrs", "milestone": ""}, {"jump": 24, "days": 8388608, "days_formatted": "8,388,608", "converted": "22,967 years", "arrival_date": "~Year 47,960", "full_arrival_date": "~Year 47,960", "cum_days": 16777215, "cum_formatted": "45,934 yrs", "milestone": ""}, {"jump": 25, "days": 16777216, "days_formatted": "16,777,216", "converted": "45,934 years", "arrival_date": "~Year 93,894", "full_arrival_date": "~Year 93,894", "cum_days": 33554431, "cum_formatted": "91,869 yrs", "milestone": "Prehistoric deep future (~91,000+ yrs)"}, {"jump": 26, "days": 33554432, "days_formatted": "33,554,432", "converted": "91,869 years", "arrival_date": "~Year 185,763", "full_arrival_date": "~Year 185,763", "cum_days": 67108863, "cum_formatted": "183,738 yrs", "milestone": ""}, {"jump": 27, "days": 67108864, "days_formatted": "67,108,864", "converted": "183,738 years", "arrival_date": "~Year 369,501", "full_arrival_date": "~Year 369,501", "cum_days": 134217727, "cum_formatted": "367,476 yrs", "milestone": ""}, {"jump": 28, "days": 134217728, "days_formatted": "134,217,728", "converted": "367,476 years", "arrival_date": "~Year 736,977", "full_arrival_date": "~Year 736,977", "cum_days": 268435455, "cum_formatted": "734,951 yrs", "milestone": ""}, {"jump": 29, "days": 268435456, "days_formatted": "268,435,456", "converted": "734,951 years", "arrival_date": "~Year 1,471,928", "full_arrival_date": "~Year 1,471,928", "cum_days": 536870911, "cum_formatted": "1.47M yrs", "milestone": ""}, {"jump": 30, "days": 536870912, "days_formatted": "536,870,912", "converted": "1.47 million years", "arrival_date": "~Year 2,941,831", "full_arrival_date": "~Year 2,941,831", "cum_days": 1073741823, "cum_formatted": "2.94M yrs", "milestone": "Cosmic scale (1.47 million yrs)"}];
+    const STORAGE_KEY_JUMP = 'the_traveler_current_jump';
+    const STORAGE_KEY_NOTES = 'the_traveler_jump_notes';
+    const STORAGE_KEY_SPOILER = 'the_traveler_spoiler_shield';
+
+    let currentJump = parseInt(localStorage.getItem(STORAGE_KEY_JUMP) || '1', 10);
+    if (isNaN(currentJump) || currentJump < 1) currentJump = 1;
+    if (currentJump > 30) currentJump = 30;
+
+    let userNotes = {};
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY_NOTES);
+      if (saved) userNotes = JSON.parse(saved);
+    } catch (e) {
+      console.warn('LocalStorage error:', e);
+    }
+
+    let spoilerShield = localStorage.getItem(STORAGE_KEY_SPOILER) !== 'false';
+
+    // Elements
+    const jumpsFeed = document.getElementById('jumps-feed');
+    const lockedCard = document.getElementById('locked-card');
+    const cardNextBtn = document.getElementById('card-next-btn');
+    const peekAllBtn = document.getElementById('peek-all-btn');
+    const saveBadge = document.getElementById('save-badge');
+    const saveText = document.getElementById('save-text');
+
+    // Modals
+    const spoilerModal = document.getElementById('spoiler-modal');
+    const modalCancelBtn = document.getElementById('modal-cancel-btn');
+    const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+
+    const menuBtn = document.getElementById('menu-btn');
+    const settingsDrawer = document.getElementById('settings-drawer');
+    const closeDrawerBtn = document.getElementById('close-drawer-btn');
+    const drawerJumpSelect = document.getElementById('drawer-jump-select');
+    const drawerSpoilerToggle = document.getElementById('drawer-spoiler-toggle');
+    const drawerExportBtn = document.getElementById('drawer-export-btn');
+    const drawerImportFile = document.getElementById('drawer-import-file');
+
+    function initDrawerSelector() {
+      drawerJumpSelect.innerHTML = '';
+      JUMPS.forEach(j => {
+        const opt = document.createElement('option');
+        opt.value = j.jump;
+        opt.textContent = `Jump #${j.jump} (${j.converted})`;
+        drawerJumpSelect.appendChild(opt);
+      });
+      drawerJumpSelect.value = currentJump;
+    }
+
+    let saveTimeout = null;
+    function saveNote(jumpNum, note) {
+      userNotes[jumpNum] = note;
+      try {
+        localStorage.setItem(STORAGE_KEY_NOTES, JSON.stringify(userNotes));
+      } catch (err) {
+        console.error('Save failed:', err);
+      }
+
+      saveText.textContent = 'Saving...';
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        saveText.textContent = 'Saved';
+      }, 350);
+    }
+
+    function renderFeed() {
+      jumpsFeed.innerHTML = '';
+      const visible = spoilerShield ? JUMPS.filter(j => j.jump <= currentJump) : JUMPS;
+
+      visible.forEach(item => {
+        const isCurrent = item.jump === currentJump;
+        const card = document.createElement('article');
+        card.id = `jump-card-${item.jump}`;
+        card.className = `p-3.5 sm:p-4 rounded-2xl border transition-all duration-200 ${
+          isCurrent 
+            ? 'bg-parchment-900 border-amberlamp-500/80 glow-warm ring-1 ring-amberlamp-500/40' 
+            : 'bg-parchment-900/90 border-parchment-800'
+        }`;
+
+        const note = userNotes[item.jump] || '';
+
+        card.innerHTML = `
+          <!-- Header with Jump # and Milestone -->
+          <div class="flex items-center justify-between gap-2 mb-2">
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-lg font-mono font-bold text-xs ${
+                isCurrent 
+                  ? 'bg-amberlamp-400 text-parchment-950 font-bold shadow-sm shadow-amberlamp-400/50' 
+                  : 'bg-parchment-850 text-amberlamp-200 border border-parchment-750'
+              }">
+                Jump #${item.jump}
+              </span>
+              ${isCurrent ? '<span class="text-[10px] uppercase font-mono font-bold tracking-wider text-amberlamp-300 animate-pulse">● Active Jump</span>' : ''}
+            </div>
+
+            <div class="text-right">
+              <span class="text-xs font-semibold text-warmwhite-200 font-mono bg-parchment-850 border border-parchment-800 px-2 py-0.5 rounded-md">
+                ${item.converted}
+              </span>
+            </div>
+          </div>
+
+          <!-- Key Metrics Grid -->
+          <div class="grid grid-cols-2 gap-2 p-2 rounded-xl bg-parchment-950/80 border border-parchment-850 mb-2.5">
+            <div>
+              <div class="text-[9px] uppercase tracking-wider text-warmwhite-500 font-mono">Arrival Date</div>
+              <div class="text-xs sm:text-sm font-bold text-amberlamp-200 leading-tight mt-0.5">${item.full_arrival_date}</div>
+            </div>
+            <div>
+              <div class="text-[9px] uppercase tracking-wider text-warmwhite-500 font-mono">Jump Duration</div>
+              <div class="text-xs font-semibold text-warmwhite-100 mt-0.5 font-mono">${item.days_formatted} days</div>
+              <div class="text-[10px] text-warmwhite-500 font-mono">(${item.cum_formatted} total)</div>
+            </div>
+          </div>
+
+          ${item.milestone ? `
+            <div class="mb-2.5 px-2.5 py-1 rounded-lg bg-amberlamp-950/40 border border-amberlamp-800/60 text-xs text-amberlamp-200 flex items-center gap-1.5">
+              <span>✨</span>
+              <span class="font-medium text-[11px]">${item.milestone}</span>
+            </div>
+          ` : ''}
+
+          <!-- Notes Area -->
+          <div class="mt-1.5">
+            <div class="flex items-center justify-between mb-1">
+              <label for="note-input-${item.jump}" class="text-[10px] font-mono font-medium text-warmwhite-400">
+                Notes for Jump #${item.jump}:
+              </label>
+              <span class="text-[10px] text-warmwhite-500 font-mono">${note.length > 0 ? note.length + ' chars' : 'Empty'}</span>
+            </div>
+            <textarea
+              id="note-input-${item.jump}"
+              data-jump="${item.jump}"
+              placeholder="Plot discoveries..."
+              rows="2"
+              class="w-full bg-parchment-950 text-warmwhite-100 placeholder-warmwhite-500/70 rounded-xl border border-parchment-750 focus:border-amberlamp-400 focus:ring-1 focus:ring-amberlamp-400 p-2.5 leading-relaxed transition"
+            >${note}</textarea>
+          </div>
+        `;
+
+        jumpsFeed.appendChild(card);
+      });
+
+      // Auto-resize & listeners
+      jumpsFeed.querySelectorAll('textarea').forEach(tx => {
+        tx.addEventListener('input', (e) => {
+          const j = parseInt(e.target.getAttribute('data-jump'), 10);
+          saveNote(j, e.target.value);
+        });
+      });
+
+      updateNavUI();
+    }
+
+    function updateNavUI() {
+      drawerJumpSelect.value = currentJump;
+
+      if (currentJump >= 30) {
+        cardNextBtn.disabled = true;
+        cardNextBtn.classList.add('opacity-40', 'pointer-events-none');
+      } else {
+        cardNextBtn.disabled = false;
+        cardNextBtn.classList.remove('opacity-40', 'pointer-events-none');
+      }
+
+      if (spoilerShield && currentJump < 30) {
+        lockedCard.classList.remove('hidden');
+      } else {
+        lockedCard.classList.add('hidden');
+      }
+    }
+
+    function setJump(n, scrollToCard = false) {
+      if (n < 1) n = 1;
+      if (n > 30) n = 30;
+      currentJump = n;
+      localStorage.setItem(STORAGE_KEY_JUMP, currentJump.toString());
+      renderFeed();
+
+      if (scrollToCard) {
+        setTimeout(() => {
+          const el = document.getElementById(`jump-card-${currentJump}`);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 80);
+      }
+    }
+
+    // Reveal Next Jump clicked on Card
+    cardNextBtn.addEventListener('click', () => {
+      if (currentJump < 30) {
+        setJump(currentJump + 1, true);
+      }
+    });
+
+    // Drawer jump selector
+    drawerJumpSelect.addEventListener('change', (e) => {
+      setJump(parseInt(e.target.value, 10), true);
+    });
+
+    // Trigger Spoiler Confirmation Modal
+    peekAllBtn.addEventListener('click', () => {
+      spoilerModal.classList.remove('hidden');
+    });
+
+    modalCancelBtn.addEventListener('click', () => {
+      spoilerModal.classList.add('hidden');
+    });
+
+    modalConfirmBtn.addEventListener('click', () => {
+      spoilerModal.classList.add('hidden');
+      spoilerShield = false;
+      drawerSpoilerToggle.checked = false;
+      localStorage.setItem(STORAGE_KEY_SPOILER, 'false');
+      renderFeed();
+    });
+
+    // Modal Events
+    menuBtn.addEventListener('click', () => {
+      settingsDrawer.classList.remove('hidden');
+    });
+
+    closeDrawerBtn.addEventListener('click', () => {
+      settingsDrawer.classList.add('hidden');
+    });
+
+    settingsDrawer.addEventListener('click', (e) => {
+      if (e.target === settingsDrawer) settingsDrawer.classList.add('hidden');
+    });
+
+    drawerSpoilerToggle.addEventListener('change', (e) => {
+      if (!e.target.checked) {
+        settingsDrawer.classList.add('hidden');
+        spoilerModal.classList.remove('hidden');
+        e.target.checked = true;
+      } else {
+        spoilerShield = true;
+        localStorage.setItem(STORAGE_KEY_SPOILER, 'true');
+        renderFeed();
+      }
+    });
+
+    drawerExportBtn.addEventListener('click', () => {
+      const exportData = {
+        title: 'The Traveler - Reading Notes',
+        author: 'Joseph Eckert',
+        startDate: 'April 1, 2026',
+        exportDate: new Date().toISOString(),
+        currentJump: currentJump,
+        notes: userNotes
+      };
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Traveler_Notes_Jump_${currentJump}_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    drawerImportFile.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const imported = JSON.parse(event.target.result);
+          if (imported && imported.notes) {
+            userNotes = Object.assign(userNotes, imported.notes);
+            localStorage.setItem(STORAGE_KEY_NOTES, JSON.stringify(userNotes));
+            if (imported.currentJump) setJump(imported.currentJump, true);
+            else renderFeed();
+            settingsDrawer.classList.add('hidden');
+            saveText.textContent = 'Restored';
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    // Init
+    initDrawerSelector();
+    drawerSpoilerToggle.checked = spoilerShield;
+    renderFeed();
+  </script>
+</body>
+</html>
