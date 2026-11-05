@@ -70,31 +70,6 @@ Listen to or read _The Traveler_ across your favorite platforms:
 
 ---
 
-## Timeline Mechanics (Starts Monday, April 13, 2026)
-
-| Jump # | Leap Duration | Converted Time | Calendar Arrival Date | Milestone |
-| :---: | :---: | :---: | :---: | :--- |
-| **1** | 1 day | 1 day | **Tuesday, April 14, 2026** | First slip (24 hours lost) |
-| **2** | 2 days | 2 days | **Thursday, April 16, 2026** | The doubling begins |
-| **3** | 4 days | 4 days | **Monday, April 20, 2026** | 1 week total elapsed |
-| **4** | 8 days | 1.1 weeks | **Tuesday, April 28, 2026** | Two weeks lost |
-| **5** | 16 days | 2.3 weeks | **Thursday, May 14, 2026** | 1 month unfolded in days |
-| **6** | 32 days | 1.1 months | **Monday, June 15, 2026** | Leap extends past a month |
-| **7** | 64 days | 2.1 months | **Tuesday, August 18, 2026** | Summer slips away |
-| **8** | 128 days | 4.2 months | **Thursday, December 24, 2026** | Christmas Eve |
-| **9** | 256 days | 8.4 months | **Monday, September 6, 2027** | Labor Day 2027 |
-| **10** | 512 days | 1.4 years | **Tuesday, January 30, 2029** | Passing the 1-year mark |
-| **11** | 1,024 days | 2.8 years | **Thursday, November 20, 2031** | Nearly 3 years per leap |
-| **12** | 2,048 days | 5.6 years | **Monday, June 29, 2037** | Lyle enters adulthood |
-| **13** | 4,096 days | 11.2 years | **Tuesday, September 15, 2048** | Over a decade forward |
-| **14** | 8,192 days | 22.4 years | **Thursday, February 19, 2071** | Lyle reaches senior age |
-| **15** | 16,384 days | 44.9 years | **Monday, December 30, 2115** | Beyond Lyle's lifetime |
-| **20** | 524,288 days | 1,435 years | **Thursday, March 7, 4897** | Deep millennial future |
-| **25** | 16,777,216 days | 45,934 years | **~Year 93,894** | Prehistoric human scale |
-| **30** | 536,870,912 days | 1.47 million years | **~Year 1,471,904** | Deep cosmic time |
-
----
-
 ## Local Development & Hosting
 
 This app is built as a single, self-contained `index.html` with zero build steps or package dependencies:
@@ -108,7 +83,8 @@ cd The-Traveler-Notes
 open index.html
 ```
 
-To enable GitHub Pages:
-1. Push `index.html` to your repository's `main` branch.
-2. In GitHub, go to **Settings** → **Pages**.
-3. Under **Branch**, select `main` and root `/`, then save.
+---
+
+## License
+
+Released under the [MIT License](LICENSE).
